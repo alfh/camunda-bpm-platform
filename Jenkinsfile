@@ -231,7 +231,7 @@ pipeline {
             ])
           }
         }
-        stage('engine-IT-tomcat-9-postgresql-142') {
+        stage('engine-IT-tomcat-9-postgresql-170') {
           when {
             expression {
               cambpmWithLabels('all', 'all-as', 'tomcat')
@@ -257,7 +257,7 @@ pipeline {
             ])
           }
         }
-        stage('engine-IT-tomcat-10-postgresql-142') {
+        stage('engine-IT-tomcat-10-postgresql-170') {
           when {
             expression {
               cambpmWithLabels('all', 'all-as', 'tomcat')
@@ -283,7 +283,7 @@ pipeline {
             ])
           }
         }
-        stage('engine-IT-wildfly-postgresql-142') {
+        stage('engine-IT-wildfly-postgresql-170') {
           when {
             expression {
               cambpmWithLabels('all', 'all-as', 'wildfly')
@@ -312,7 +312,7 @@ pipeline {
             ])
           }
         }
-        stage('engine-IT-XA-wildfly-postgresql-142') {
+        stage('engine-IT-XA-wildfly-postgresql-170') {
           when {
             expression {
               cambpmWithLabels('all', 'all-as', 'wildfly')
