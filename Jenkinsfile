@@ -239,13 +239,17 @@ pipeline {
           }
           steps {
             cambpmConditionalRetry([
-              agentLabel: 'postgresql_142',
+              podSpec: [
+                cpu: 4,
+                images: ['maven:3.9.7-eclipse-temurin-11', 'postgres:17.0']
+              ],
               runSteps: {
                 cambpmRunMaven('qa/',
-                'clean install -Ptomcat9,postgresql,engine-integration',
-                runtimeStash: true,
-                archiveStash: true,
-                jdkVersion: 'jdk-11-latest')
+                  'clean install -Ptomcat9,postgresql,engine-integration',
+                  runtimeStash: true,
+                  archiveStash: true,
+                  jdkVersion: 'jdk-11-latest',
+                  withPodSpec: true)
               },
               postFailure: {
                 cambpmPublishTestResult()
@@ -261,9 +265,16 @@ pipeline {
           }
           steps {
             cambpmConditionalRetry([
-              agentLabel: 'postgresql_142',
+              podSpec: [
+                cpu: 4,
+                images: ['maven:3.9.7-eclipse-temurin-17', 'postgres:17.0']
+              ],
               runSteps: {
-                cambpmRunMaven('qa/', 'clean install -Ptomcat,postgresql,engine-integration-jakarta', runtimeStash: true, archiveStash: true, jdkVersion: 'jdk-17-latest')
+                cambpmRunMaven('qa/', 'clean install -Ptomcat,postgresql,engine-integration-jakarta',
+                  runtimeStash: true,
+                  archiveStash: true,
+                  jdkVersion: 'jdk-17-latest',
+                  withPodSpec: true)
               },
               postFailure: {
                 cambpmPublishTestResult()
@@ -280,14 +291,18 @@ pipeline {
           }
           steps {
             cambpmConditionalRetry([
-              agentLabel: 'postgresql_142',
+              podSpec: [
+                cpu: 4,
+                images: ['maven:3.9.7-eclipse-temurin-17', 'postgres:17.0']
+              ],
               runSteps: {
                 cambpmRunMaven('qa/', 
                   'clean install -Pwildfly,postgresql,engine-integration-jakarta', 
                   runtimeStash: true, 
                   archiveStash: true,
                   // we need to use JDK 17 for Spring 6
-                  jdkVersion: 'jdk-17-latest')
+                  jdkVersion: 'jdk-17-latest',
+                  withPodSpec: true)
               },
               postFailure: {
                 cambpmPublishTestResult()
@@ -305,14 +320,18 @@ pipeline {
           }
           steps {
             cambpmConditionalRetry([
-              agentLabel: 'postgresql_142',
+              podSpec: [
+                cpu: 4,
+                images: ['maven:3.9.7-eclipse-temurin-17', 'postgres:17.0']
+              ],
               runSteps: {
                 cambpmRunMaven('qa/', 
                   'clean install -Pwildfly,postgresql,postgresql-xa,engine-integration-jakarta', 
                   runtimeStash: true, 
                   archiveStash: true,
                   // we need to use JDK 17 for Spring 6
-                  jdkVersion: 'jdk-17-latest')
+                  jdkVersion: 'jdk-17-latest',
+                  withPodSpec: true)
               },
               postFailure: {
                 cambpmPublishTestResult()
