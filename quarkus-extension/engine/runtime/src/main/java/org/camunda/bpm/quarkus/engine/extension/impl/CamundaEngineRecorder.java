@@ -53,16 +53,17 @@ public class CamundaEngineRecorder {
   }
 
   public RuntimeValue<ProcessEngineConfigurationImpl> createProcessEngineConfiguration(BeanContainer beanContainer,
-                                                                                       CamundaEngineConfig config) {
+                                                                                       RuntimeValue<CamundaEngineConfig> config) {
 
     QuarkusProcessEngineConfiguration configuration = getBeanFromContainer(QuarkusProcessEngineConfiguration.class,
         beanContainer);
 
     // apply properties from config before any other configuration.
-    PropertyHelper.applyProperties(configuration, config.genericConfig(), PropertyHelper.KEBAB_CASE);
+    CamundaEngineConfig camundaEngineConfig = config.getValue();
+    PropertyHelper.applyProperties(configuration, camundaEngineConfig.genericConfig(), PropertyHelper.KEBAB_CASE);
 
     if (configuration.getDataSource() == null) {
-      String datasource = config.datasource().orElse(DEFAULT_DATASOURCE_NAME);
+      String datasource = camundaEngineConfig.datasource().orElse(DEFAULT_DATASOURCE_NAME);
       configuration.setDataSource(DataSources.fromName(datasource));
     }
 
@@ -73,7 +74,7 @@ public class CamundaEngineRecorder {
     // configure job executor,
     // if not already configured by a custom configuration
     if (configuration.getJobExecutor() == null) {
-      configureJobExecutor(configuration, config);
+      configureJobExecutor(configuration, camundaEngineConfig);
     }
 
     configureCdiEventBridge(configuration);

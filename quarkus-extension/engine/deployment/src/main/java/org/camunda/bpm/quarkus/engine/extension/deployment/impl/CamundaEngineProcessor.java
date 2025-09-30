@@ -102,7 +102,7 @@ public class CamundaEngineProcessor {
     BeanContainer beanContainer = beanContainerBuildItem.getValue();
     recorder.configureProcessEngineCdiBeans(beanContainer);
     RuntimeValue<ProcessEngineConfigurationImpl> processEngineConfiguration =
-        recorder.createProcessEngineConfiguration(beanContainer, camundaEngineConfig);
+        recorder.createProcessEngineConfiguration(beanContainer, new RuntimeValue<>(camundaEngineConfig));
     configurationProducer.produce(new ProcessEngineConfigurationBuildItem(processEngineConfiguration));
   }
 
